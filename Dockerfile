@@ -1,11 +1,20 @@
 FROM openjdk:8u151-jdk-alpine3.7
-  
-EXPOSE 8080
- 
+
+# Set environment variable for the application home
 ENV APP_HOME /usr/src/app
 
-COPY target/secretsanta-0.0.1-SNAPSHOT.jar $APP_HOME/app.jar
+# Create the application directory
+RUN mkdir -p $APP_HOME
 
+# Set the working directory
 WORKDIR $APP_HOME
 
-ENTRYPOINT exec java -jar app.jar 
+# Expose the application's port
+EXPOSE 8080
+
+# Copy the JAR file into the application directory
+COPY target/secretsanta-0.0.1-SNAPSHOT.jar app.jar
+
+# Define the command to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
